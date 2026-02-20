@@ -1,0 +1,33 @@
+name: Daily Job Search
+
+on:
+  schedule:
+    - cron: '0 5 * * *'   # Runs every day at 5:00 AM UTC
+  workflow_dispatch:        # Allows manual trigger from GitHub UI (for testing)
+
+jobs:
+  search-jobs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run job search
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          YOUR_EMAIL: ${{ secrets.YOUR_EMAIL }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RESUME_TEXT: ${{ secrets.RESUME_TEXT }}
+          JOB_KEYWORDS: ${{ secrets.JOB_KEYWORDS }}
+          JOB_LOCATION: ${{ secrets.JOB_LOCATION }}
+          MIN_MATCH_SCORE: ${{ secrets.MIN_MATCH_SCORE }}
+        run: python scripts/job_search.py
