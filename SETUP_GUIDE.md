@@ -1,5 +1,5 @@
 # 🎯 Job Search Automation — Setup Guide
-**Stack: Python + GitHub Actions + Claude AI — 100% Free**
+**Stack: Python + GitHub Actions + Claude AI **
 
 ---
 
